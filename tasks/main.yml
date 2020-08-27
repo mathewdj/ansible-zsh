@@ -1,0 +1,40 @@
+---
+    - name: Create ~/.functions directory
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.functions"
+        state: directory
+
+    - name: Copy zsh functions to ~/.functions
+      copy:
+        src: "{{ item }}"
+        dest: "{{ lookup('env', 'HOME') }}/.functions/"
+      with_fileglob:
+        - "files/functions/*"
+
+    - git:
+        repo: https://github.com/ohmyzsh/ohmyzsh.git
+        dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/"
+        update: yes
+
+    - name: Create ~/custom/themes directory
+      file:
+        path: "{{ lookup('env', 'HOME') }}/custom/themes"
+        state: directory
+
+    - git:
+        repo: https://github.com/denysdovhan/spaceship-prompt.git
+        dest: "{{ lookup('env', 'HOME') }}/custom/themes/spaceship-prompt"
+        depth: 1
+        update: yes
+
+    - name: Symlink spaceship .oh-my-zsh/custom/themes/spaceship.zsh-theme
+      file:
+        src: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme"
+        dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+        state: link
+
+    - name: "Install zsh. Run 'chsh -s /bin/zsh' to set zsh as default shell"
+      homebrew:
+        name: zsh
+        state: latest
+        update_homebrew: yes
