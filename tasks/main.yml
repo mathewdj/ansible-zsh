@@ -1,4 +1,9 @@
 ---
+    - name: Copy ~/.zshrc
+      copy:
+        src: zshrc.sh
+        dest: "{{ lookup('env', 'HOME') }}/.zshrc"
+
     - name: Create ~/.functions directory
       file:
         path: "{{ lookup('env', 'HOME') }}/.functions"
@@ -16,14 +21,14 @@
         dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/"
         update: yes
 
-    - name: Create ~/custom/themes directory
+    - name: Create ~/.oh-my-zsh/custom/themes directory
       file:
-        path: "{{ lookup('env', 'HOME') }}/custom/themes"
+        path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/themes"
         state: directory
 
     - git:
         repo: https://github.com/denysdovhan/spaceship-prompt.git
-        dest: "{{ lookup('env', 'HOME') }}/custom/themes/spaceship-prompt"
+        dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/themes/spaceship-prompt"
         depth: 1
         update: yes
 
@@ -38,3 +43,5 @@
         name: zsh
         state: latest
         update_homebrew: yes
+
+    #TODO Change default shell in ansible - chsh -s /bin/zsh
