@@ -100,3 +100,10 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 for bash_function in ~/.functions/**/*.sh; do source $bash_function; echo $bash_function; done
 export PATH="$PATH:$HOME/.functions/"
+
+source ${HOME}/.bash_functions
+source ${HOME}/.bash_aliases
+
+# Workaround macos defaulting to python3.7 instead of brew installed one, causing conflicts with brew one
+alias python3=/usr/local/bin/python3
+alias pip=/usr/local/bin/pip3
