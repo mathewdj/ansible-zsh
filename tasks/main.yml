@@ -38,10 +38,16 @@
         dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
         state: link
 
+    - name: check if /bin/zsh file exists
+      stat: 
+        path: /bin/zsh
+      register: zsh_file
+        
     - name: "Install zsh. Run 'chsh -s /bin/zsh' to set zsh as default shell"
       homebrew:
         name: zsh
         state: latest
         update_homebrew: yes
+      when: zsh_file.stat.exists == false      
 
     #TODO Change default shell in ansible - chsh -s /bin/zsh
