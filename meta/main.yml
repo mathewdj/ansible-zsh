@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: ansible-zsh
-  author: sorting-mjatt
+  author: green-seagull
   description: Installs zsh with spaceship theme
   
   # If the issue tracker for your role is not on github, uncomment the
