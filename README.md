@@ -1,5 +1,5 @@
 # ansible zsh
-Install oh my zsh and spaceship theme.
+Install oh my zsh, spaceship theme, Hyper terminal and Powerline fonts
 
 ## Quickstart
 1. To test playbook locally:

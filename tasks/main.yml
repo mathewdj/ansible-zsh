@@ -50,4 +50,32 @@
         update_homebrew: yes
       when: zsh_file.stat.exists == false      
 
-    #TODO Change default shell in ansible - chsh -s /bin/zsh
+    - name: check if ~/Library/Fonts/ter-powerline-x12b.pcf.gz exists
+      stat:
+        path: "{{ lookup('env', 'HOME') }}/Library/Fonts/ter-powerline-x12b.pcf.gz"
+      register: powerline_file
+
+    - name: Download powerline fonts (need "Fira Mono for Powerline")
+      git:
+        repo: https://github.com/powerline/fonts.git
+        dest: "{{ lookup('env', 'HOME') }}/fonts"
+        version: e80e3eb
+      when: powerline_file.stat.exists == false
+
+    - name: Install fonts
+      command:
+        chdir: "{{ lookup('env', 'HOME') }}/fonts"
+        cmd: ./install.sh
+      when: powerline_file.stat.exists == false
+
+    - name: Copy .hyper.js to ~/.hyper.js
+      copy:
+        src: ".hyper.js"
+        dest: "{{ lookup('env', 'HOME') }}/.hyper.js"
+
+    - name: "Install Hyper terminal"
+      homebrew_cask:
+        name: hyper
+        state: upgraded
+        greedy: yes
+        update_homebrew: yes
