@@ -73,9 +73,10 @@
         src: ".hyper.js"
         dest: "{{ lookup('env', 'HOME') }}/.hyper.js"
 
-    - name: "Install Hyper terminal"
+    - name: "Install Hyper terminal (optional)"
       homebrew_cask:
         name: hyper
         state: upgraded
         greedy: yes
         update_homebrew: yes
+      ignore_errors: yes
