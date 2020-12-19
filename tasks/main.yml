@@ -9,13 +9,6 @@
         path: "{{ lookup('env', 'HOME') }}/.functions"
         state: directory
 
-    - name: Copy zsh functions to ~/.functions
-      copy:
-        src: "{{ item }}"
-        dest: "{{ lookup('env', 'HOME') }}/.functions/"
-      with_fileglob:
-        - "files/functions/*"
-
     - git:
         repo: https://github.com/ohmyzsh/ohmyzsh.git
         dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/"
