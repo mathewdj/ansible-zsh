@@ -9,13 +9,6 @@
         path: "{{ lookup('env', 'HOME') }}/.functions"
         state: directory
 
-    - name: Copy zsh functions to ~/.functions
-      copy:
-        src: "{{ item }}"
-        dest: "{{ lookup('env', 'HOME') }}/.functions/"
-      with_fileglob:
-        - "files/functions/*"
-
     - git:
         repo: https://github.com/ohmyzsh/ohmyzsh.git
         dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/"
@@ -26,11 +19,12 @@
         path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/themes"
         state: directory
 
-    - git:
+    - name: Download spaceship theme from github
+      git:
         repo: https://github.com/denysdovhan/spaceship-prompt.git
         dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/themes/spaceship-prompt"
         depth: 1
-        update: yes
+        update: no
 
     - name: Symlink spaceship .oh-my-zsh/custom/themes/spaceship.zsh-theme
       file:
