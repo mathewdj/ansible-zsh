@@ -9,7 +9,8 @@
         path: "{{ lookup('env', 'HOME') }}/.functions"
         state: directory
 
-    - git:
+    - name: Clone ohmyzsh from github
+      git:
         repo: https://github.com/ohmyzsh/ohmyzsh.git
         dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/"
         update: yes
